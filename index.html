@@ -198,11 +198,31 @@
                 <!-- Image Gallery -->
                 <div class="mb-8">
                     <div class="bg-gradient-to-r from-purple-200 to-pink-200 rounded-2xl p-4">
-                        <div class="aspect-video bg-white rounded-xl overflow-hidden shadow-inner">
-                            <img src="https://drive.google.com/uc?export=view&id=1JI2KFzbAfEgdJ6fACZRY-FXx7ak0LTPe" 
-                                 alt="พิพิธภัณฑ์เด็กกรุงเทพมหานคร" 
-                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center\'><div class=\'text-center p-8\'><svg class=\'w-24 h-24 mx-auto mb-4 text-purple-500\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'></path></svg><p class=\'text-gray-600 font-medium\'>🏛️ พิพิธภัณฑ์เด็กกรุงเทพมหานคร</p><p class=\'text-sm text-gray-500 mt-2\'>สถานที่แห่งการเรียนรู้และความสนุก</p></div></div>';">
+                        <div class="aspect-video bg-white rounded-xl overflow-hidden shadow-inner relative">
+                            <!-- Multiple image sources for better compatibility -->
+                            <picture class="w-full h-full">
+                                <source srcset="https://lh3.googleusercontent.com/d/1JI2KFzbAfEgdJ6fACZRY-FXx7ak0LTPe=s1600" media="(max-width: 768px)">
+                                <source srcset="https://drive.google.com/thumbnail?id=1JI2KFzbAfEgdJ6fACZRY-FXx7ak0LTPe&sz=w1000" media="(max-width: 1024px)">
+                                <img src="https://drive.google.com/uc?export=view&id=1JI2KFzbAfEgdJ6fACZRY-FXx7ak0LTPe" 
+                                     alt="พิพิธภัณฑ์เด็กกรุงเทพมหานคร" 
+                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                     loading="lazy">
+                            </picture>
+                            <!-- Direct link fallback -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 items-center justify-center hidden" id="image-fallback">
+                                <div class="text-center p-8">
+                                    <svg class="w-24 h-24 mx-auto mb-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <p class="text-gray-600 font-medium">🏛️ พิพิธภัณฑ์เด็กกรุงเทพมหานคร</p>
+                                    <p class="text-sm text-gray-500 mt-2">สถานที่แห่งการเรียนรู้และความสนุก</p>
+                                    <a href="https://drive.google.com/file/d/1JI2KFzbAfEgdJ6fACZRY-FXx7ak0LTPe/view" 
+                                       target="_blank" 
+                                       class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                       📷 ดูภาพประกอบ
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -352,6 +372,38 @@
         
         window.addEventListener('resize', checkMobile);
         checkMobile();
+        
+        // Enhanced image loading with multiple fallbacks
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('img[alt="พิพิธภัณฑ์เด็กกรุงเทพมหานคร"]');
+            const fallback = document.getElementById('image-fallback');
+            
+            images.forEach(img => {
+                // Check if image loaded successfully
+                img.addEventListener('error', function() {
+                    console.log('Image failed to load, showing fallback');
+                    if (fallback) {
+                        img.parentElement.style.display = 'none';
+                        fallback.classList.remove('hidden');
+                        fallback.classList.add('flex');
+                    }
+                });
+                
+                // For mobile devices, add timeout check
+                if (window.innerWidth < 768) {
+                    setTimeout(() => {
+                        if (!img.complete || img.naturalWidth === 0) {
+                            console.log('Image not loaded on mobile, showing fallback');
+                            if (fallback) {
+                                img.parentElement.style.display = 'none';
+                                fallback.classList.remove('hidden');
+                                fallback.classList.add('flex');
+                            }
+                        }
+                    }, 3000);
+                }
+            });
+        });
         
         // Add interactive sound effect simulation (visual feedback)
         document.querySelectorAll('button').forEach(button => {
