@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พิพิธภัณฑ์เด็กกรุงเทพมหานคร - ประกาศเปิดให้บริการ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Kanit', 'Prompt', sans-serif;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(2deg); }
+            75% { transform: translateY(-10px) rotate(-2deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(120deg, #667eea, #764ba2, #f093fb, #f5576c, #fda085, #f6d365);
+            background-size: 300% 300%;
+            animation: gradient-shift 10s ease infinite;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f39c12;
+            animation: confetti-fall 5s linear infinite;
+        }
+        
+        .dark-mode {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+        
+        .light-mode {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .emoji-rain {
+            position: fixed;
+            font-size: 30px;
+            animation: confetti-fall 8s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        .text-shadow-glow {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-hover:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg transition-all duration-500" id="body">
+    <!-- Confetti Animation -->
+    <div id="confetti-container"></div>
+    
+    <!-- Emoji Rain -->
+    <div id="emoji-container"></div>
+    
+    <!-- Toggle Theme Button -->
+    <button id="theme-toggle" class="fixed top-4 right-4 z-50 bg-white/20 backdrop-blur-md text-white p-3 rounded-full shadow-lg hover:bg-white/30 transition-all duration-300 btn-hover">
+        <svg id="sun-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+        </svg>
+        <svg id="moon-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+        </svg>
+    </button>
+    
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 relative z-10">
+        <!-- Header with Animation -->
+        <div class="text-center mb-8 float-animation">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 text-shadow-glow">
+                🎈 ประกาศสำคัญ 🎈
+            </h1>
+            <div class="inline-block bg-white/90 backdrop-blur-md rounded-2xl p-2 px-6 shadow-2xl pulse-glow">
+                <p class="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    พิพิธภัณฑ์เด็กกรุงเทพมหานคร
+                </p>
+            </div>
+        </div>
+        
+        <!-- Main Card -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 card-3d">
+                <!-- Date Badge -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-3 rounded-full shadow-lg bounce-slow">
+                        <p class="text-lg md:text-xl font-bold">📅 วันอังคารที่ 12 สิงหาคม 2568</p>
+                    </div>
+                </div>
+                
+                <!-- Museum Info -->
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                        พิพิธภัณฑ์เด็กกรุงเทพมหานครแห่งที่ 1
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-600 font-medium">
+                        📍 สาขาจตุจักร
+                    </p>
+                </div>
+                
+                <!-- Status Message -->
+                <div class="bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl p-6 mb-8 transform hover:scale-105 transition-transform duration-300">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white text-center mb-2">
+                        ✨ เปิดให้บริการตามปกติ ✨
+                    </h3>
+                    <p class="text-lg md:text-xl text-white text-center">
+                        มาร่วมสนุกกันเยอะๆ นะคะ 🎉
+                    </p>
+                </div>
+                
+                <!-- Image Gallery -->
+                <div class="mb-8">
+                    <div class="bg-gradient-to-r from-purple-200 to-pink-200 rounded-2xl p-4">
+                        <div class="aspect-video bg-white rounded-xl overflow-hidden shadow-inner">
+                            <div class="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                                <div class="text-center p-8">
+                                    <svg class="w-24 h-24 mx-auto mb-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <p class="text-gray-600 font-medium">🏛️ พิพิธภัณฑ์เด็กกรุงเทพมหานคร</p>
+                                    <p class="text-sm text-gray-500 mt-2">สถานที่แห่งการเรียนรู้และความสนุก</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activities Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-gradient-to-br from-pink-400 to-pink-600 p-4 rounded-xl text-white text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-3xl mb-2">🎨</div>
+                        <p class="font-semibold">กิจกรรมศิลปะ</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 rounded-xl text-white text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-3xl mb-2">🔬</div>
+                        <p class="font-semibold">วิทยาศาสตร์สนุก</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-400 to-green-600 p-4 rounded-xl text-white text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-3xl mb-2">🎮</div>
+                        <p class="font-semibold">เกมการเรียนรู้</p>
+                    </div>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 btn-hover">
+                        🎟️ จองตั๋วเข้าชม
+                    </button>
+                    <button class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 btn-hover">
+                        📞 ติดต่อสอบถาม
+                    </button>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600">
+                        <span class="font-semibold">เวลาทำการ:</span> 10:00 - 18:00 น.
+                    </p>
+                    <p class="text-gray-600 mt-2">
+                        <span class="font-semibold">โทร:</span> 02-XXX-XXXX
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-white">
+            <p class="text-lg">© 2568 พิพิธภัณฑ์เด็กกรุงเทพมหานคร</p>
+            <p class="text-sm mt-2 opacity-80">สร้างความสุขและการเรียนรู้ให้กับเด็กๆ ทุกคน</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.getElementById('body');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        let isDarkMode = false;
+        
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                body.style.background = 'linear-gradient(135deg, #1e3c72, #2a5298)';
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                body.style.background = '';
+                body.classList.add('gradient-bg');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        });
+        
+        // Create Confetti
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#f39c12', '#e74c3c', '#9b59b6', '#3498db', '#2ecc71', '#f1c40f'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 8000);
+                }, Math.random() * 3000);
+            }
+        }
+        
+        // Create Emoji Rain
+        function createEmojiRain() {
+            const container = document.getElementById('emoji-container');
+            const emojis = ['🎈', '🎉', '🎊', '🌟', '✨', '🎨', '🎮', '🧸', '🎪', '🎠'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-rain';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.animationDelay = Math.random() * 5 + 's';
+                    emoji.style.animationDuration = (Math.random() * 3 + 8) + 's';
+                    container.appendChild(emoji);
+                    
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 11000);
+                }, Math.random() * 5000);
+            }
+        }
+        
+        // Create Sparkles
+        function createSparkle(e) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+        
+        // Initialize animations
+        setInterval(createConfetti, 10000);
+        setInterval(createEmojiRain, 15000);
+        createConfetti();
+        createEmojiRain();
+        
+        // Add sparkle effect on mouse move (desktop only)
+        let sparkleTimeout;
+        document.addEventListener('mousemove', (e) => {
+            clearTimeout(sparkleTimeout);
+            sparkleTimeout = setTimeout(() => {
+                createSparkle(e);
+            }, 100);
+        });
+        
+        // Mobile responsive check
+        function checkMobile() {
+            if (window.innerWidth < 768) {
+                console.log('Mobile view activated');
+            }
+        }
+        
+        window.addEventListener('resize', checkMobile);
+        checkMobile();
+        
+        // Add interactive sound effect simulation (visual feedback)
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                from {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(4);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
